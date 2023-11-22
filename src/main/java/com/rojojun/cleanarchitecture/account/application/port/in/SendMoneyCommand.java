@@ -1,25 +1,28 @@
 package com.rojojun.cleanarchitecture.account.application.port.in;
 
 import com.rojojun.cleanarchitecture.account.domain.Account;
+import com.rojojun.cleanarchitecture.account.domain.Account.AccountId;
 import com.rojojun.cleanarchitecture.account.domain.Money;
 import com.rojojun.cleanarchitecture.common.SelfValidating;
 import jakarta.validation.constraints.NotNull;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.Value;
 
-@Getter
+@Value
+@EqualsAndHashCode(callSuper = false)
 public class SendMoneyCommand extends SelfValidating<SendMoneyCommand> {
-    public SendMoneyCommand(Account.AccountId sourceAccountId, Account.AccountId targetAccountId, Money money) {
+    public SendMoneyCommand(AccountId sourceAccountId, AccountId targetAccountId, Money money) {
         this.sourceAccountId = sourceAccountId;
         this.targetAccountId = targetAccountId;
         this.money = money;
-//        requireGreaterThan(money, 0);
         this.validateSelf();
     }
 
     @NotNull
-    private final Account.AccountId sourceAccountId;
+    private final AccountId sourceAccountId;
     @NotNull
-    private final Account.AccountId targetAccountId;
+    private final AccountId targetAccountId;
     @NotNull
     private final Money money;
 }
